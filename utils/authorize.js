@@ -1,7 +1,7 @@
 const jwt = require("jsonwebtoken");
 User = require("../models/user");
 
-const verifyToken = (req, res, next) => {
+const authorizeJWT = (req, res, next) => {
   if (
     req.headers &&
     req.headers.authorization &&
@@ -16,7 +16,7 @@ const verifyToken = (req, res, next) => {
           res.status(500).send({
             message: error,
           });
-        }
+        } 
         if (err) req.id = undefined;
         else req.id = decode.id;
         next();
@@ -24,7 +24,7 @@ const verifyToken = (req, res, next) => {
     );
   } else {
     req.id = undefined;
-    next();
+   res.status(401).send({error:"unauthorized"})
   }
 };
-module.exports = verifyToken;
+module.exports = authorizeJWT;

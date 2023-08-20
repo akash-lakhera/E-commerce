@@ -1,7 +1,7 @@
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcrypt");
 var User = require("../models/user");
-register = async (req, res) => {
+const register = async (req, res) => {
   try {
     const user = new User({
       fullName: req.body.fullName,
@@ -17,7 +17,7 @@ register = async (req, res) => {
   }
 };
 
-login = (req, res) => {
+const login = (req, res) => {
   try {
     let user = User.findOne({
       username: req.body.username,
@@ -43,7 +43,7 @@ login = (req, res) => {
             var token = jwt.sign({
                 id: user.id
               }, process.env.API_SECRET, {
-                expiresIn: 86400
+                expiresIn: "2 days"
               });
               res.status(200)
         .send({
