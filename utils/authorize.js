@@ -2,13 +2,15 @@ const jwt = require("jsonwebtoken");
 User = require("../models/user");
 
 const authorizeJWT = (req, res, next) => {
+
   if (
-    req.headers &&
-    req.headers.authorization &&
-    req.headers.authorization.split(" ")[0] === "JWT"
+    req.cookies &&
+    req.cookies.authorization &&
+    req.cookies.authorization.split(" ")[0] === "JWT"
   ) {
+  
     jwt.verify(
-      req.headers.authorization.split(" ")[1],
+      req.cookies.authorization.split(" ")[1],
       process.env.API_SECRET,
       async function (err, decode) {
         try {
@@ -17,13 +19,13 @@ const authorizeJWT = (req, res, next) => {
             message: error,
           });
         } 
-        if (err) req.id = undefined;
-        else req.id = decode.id;
+        if (err) req._id = undefined;
+        else req._id = decode.id;
         next();
       }
     );
   } else {
-    req.id = undefined;
+    req._id = undefined;
    res.status(401).send({error:"unauthorized"})
   }
 };

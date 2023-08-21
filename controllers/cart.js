@@ -18,7 +18,7 @@ const addItem = async (req, res, next) => {
       { _id: req._id },
       { "cart.items": 1, _id: 0 }
     );
-    items.forEach((element) => {
+    data.cart.forEach((element) => {
       if (element._id === item._id) {
         flag = true;
       }

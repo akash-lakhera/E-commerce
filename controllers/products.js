@@ -26,7 +26,7 @@ const addProduct = async (req, res, next) => {
 
 const getProductById = async (req, res, next) => {
   try {
-    let data = await Products.findOne({ _id: req.param.id });
+    let data = await Products.findOne({ _id: req.params.id });
     res.status(200).json(data);
   } catch (error) {
     console.log(error);
